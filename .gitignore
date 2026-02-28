@@ -32,6 +32,8 @@ coverage/
 .DS_Store
 Thumbs.db
 
-# Temp
-tmp/
-temp/
+# C++ compiled binaries
+*.o
+*.out
+*.exe
+a.out

@@ -1,0 +1,8 @@
+{
+  "*.ts": ["eslint --fix", "prettier --write"],
+  "*.js": ["eslint --fix", "prettier --write"],
+  "*.{json,md,yml,yaml}": ["prettier --write"],
+  "challenges/**/*.ts": ["vitest run --reporter=verbose"],
+  "backend/**/*.ts": ["vitest run --reporter=verbose"],
+  "frontend/**/*.ts": ["vitest run --reporter=verbose"]
+}

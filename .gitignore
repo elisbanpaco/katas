@@ -37,3 +37,13 @@ Thumbs.db
 *.out
 *.exe
 a.out
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+*.exe
+
+*.out

@@ -3,7 +3,7 @@ import numpy as np
 
 # 1. Cargamos nuestro "Diccionario de Vectores" en español
 print("Cargando modelo de lenguaje...")
-nlp = spacy.load("es_core_news_md")
+nlp = spacy.load("es_core_news_lg")
 
 def obtener_vector_promedio(texto):
     """
@@ -23,6 +23,9 @@ def obtener_vector_promedio(texto):
             vectores_validos.append(palabra.vector)
             print("\nvector: ", palabra.vector)
             print(f" - Palabra clave retenida: '{palabra.text}'")
+
+        if len(vectores_validos) == 0:
+            return np.zeros(300)
             
     # Calculamos el promedio de todas las palabras válidas (centro de gravedad)
     # axis=0 significa que suma columna por columna y divide entre el total

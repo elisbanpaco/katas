@@ -57,19 +57,21 @@ void printList(ListNode* head) {
     cout << " -> nullptr" << endl;
 }
 
+
+// MAIN SOLO PARA PRUEBAS
 int main() {
     Solution sol;
 
-    // 1. Crear Lista 1: 1 -> 2 -> 4
+    // Crear Lista 1: 1 -> 2 -> 4
     ListNode* l1 = new ListNode(1, new ListNode(2, new ListNode(4)));
 
-    // 2. Crear Lista 2: 1 -> 3 -> 4
+    // Crear Lista 2: 1 -> 3 -> 4
     ListNode* l2 = new ListNode(1, new ListNode(3, new ListNode(4)));
 
     cout << "Lista 1: "; printList(l1);
     cout << "Lista 2: "; printList(l2);
 
-    // 3. Probar la función
+    // Probar la función
     ListNode* result = sol.mergeTwoLists(l1, l2);
 
     cout << "Resultado fusionado: ";

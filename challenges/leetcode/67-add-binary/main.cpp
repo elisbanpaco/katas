@@ -36,7 +36,7 @@ public:
             i--;
             j--;
         }
-        reverse(result.begin(), result.end());
+        reverse(result.begin(), result.end()); // only reverse the result
         return result;
     }
 

@@ -3,10 +3,10 @@ import { toPascalCase, toCamelCase } from './utils.js';
 export const LANGUAGES: Record<string, { ext: string; testExt?: string; hasTest: boolean }> = {
   typescript: { ext: 'ts', testExt: 'test.ts', hasTest: true },
   python: { ext: 'py', testExt: '_test.py', hasTest: true },
-  'c++': { ext: 'cpp', hasTest: false },
-  java: { ext: 'java', hasTest: false },
-  rust: { ext: 'rs', hasTest: false },
-  go: { ext: 'go', hasTest: false },
+  'c++': { ext: 'cpp', testExt: 'test.cpp', hasTest: true },
+  java: { ext: 'java', testExt: 'Test.java', hasTest: true },
+  rust: { ext: 'rs', testExt: 'rs', hasTest: true },
+  go: { ext: 'go', testExt: '_test.go', hasTest: true },
 };
 
 export function generateBoilerplate(
@@ -38,6 +38,15 @@ export function ${camelName}(): string {
   return '${name}';
 }
 `;
+      files[`index.bench.${langConfig.ext}`] = `import { bench, describe } from 'vitest';
+import { ${camelName} } from './index';
+
+describe('${pascalName} Benchmark', () => {
+  bench('default implementation', () => {
+    ${camelName}();
+  });
+});
+`;
       break;
 
     case 'python':
@@ -55,16 +64,28 @@ def ${camelName}() -> str:
       break;
 
     case 'c++':
-      files[`main.${langConfig.ext}`] = `/**
+      files[`solution.${langConfig.ext}`] = `/**
  * ${categoryName}: ${name}
  * Language: C++
  * Created with Code Forge
  */
 
 #include <iostream>
+#include <string>
+
+std::string ${camelName}() {
+    return "${name}";
+}
+`;
+      files[`test.${langConfig.ext}`] = `#include <cassert>
+#include <iostream>
+
+std::string ${camelName}();
+#include "solution.cpp"
 
 int main() {
-    std::cout << "${name}" << std::endl;
+    assert(${camelName}() == "${name}");
+    std::cout << "Test passed!" << std::endl;
     return 0;
 }
 `;
@@ -78,8 +99,15 @@ int main() {
  */
 
 public class Solution {
+    public static String ${camelName}() {
+        return "${name}";
+    }
+}
+`;
+      files[`SolutionTest.java`] = `public class SolutionTest {
     public static void main(String[] args) {
-        System.out.println("${name}");
+        assert Solution.${camelName}().equals("${name}") : "Test failed";
+        System.out.println("Test passed!");
     }
 }
 `;
@@ -92,8 +120,18 @@ public class Solution {
  * Created with Code Forge
  */
 
-fn main() {
-    println!("${name}");
+pub fn ${camelName}() -> &'static str {
+    "${name}"
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_returns_name() {
+        assert_eq!(${camelName}(), "${name}");
+    }
 }
 `;
       break;
@@ -105,10 +143,18 @@ fn main() {
 
 package main
 
-import "fmt"
+func ${camelName}() string {
+    return "${name}"
+}
+`;
+      files[`main_test.go`] = `package main
 
-func main() {
-    fmt.Println("${name}")
+import "testing"
+
+func Test${pascalName}(t *testing.T) {
+    if ${camelName}() != "${name}" {
+        t.Errorf("Expected ${name}")
+    }
 }
 `;
       break;

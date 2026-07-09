@@ -21,7 +21,7 @@ jobs:
       - name: Setup pnpm
         uses: pnpm/action-setup@v2
         with:
-          version: 9
+          version: 10
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
@@ -43,3 +43,35 @@ jobs:
 
       - name: Run tests
         run: pnpm run test:coverage
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run Python tests
+        run: python -m unittest discover -s challenges -p "*_test.py"
+
+      - name: Run C++ tests
+        run: |
+          for f in $(find challenges -name "test.cpp"); do
+            g++ -o test_bin $f && ./test_bin || exit 1
+          done
+
+      - name: Run Java tests
+        run: |
+          for f in $(find challenges -name "*Test.java"); do
+            javac $f && java -ea -cp $(dirname $f) $(basename $f .java) || exit 1
+          done
+
+      - name: Run Rust tests
+        run: |
+          for f in $(find challenges -name "main.rs"); do
+            rustc --test $f -o test_bin && ./test_bin || exit 1
+          done
+
+      - name: Run Go tests
+        run: |
+          for d in $(find challenges -name "*_test.go" -exec dirname {} \; | sort -u); do
+            (cd $d && go test) || exit 1
+          done

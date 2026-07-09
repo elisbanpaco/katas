@@ -1,6 +1,7 @@
+/* eslint-disable no-console */
 import { execSync } from 'child_process';
-import { readdirSync, existsSync } from 'fs';
-import { join } from 'path';
+import { readdirSync, existsSync, statSync } from 'fs';
+import { join, dirname } from 'path';
 
 const args = process.argv.slice(2);
 
@@ -11,16 +12,20 @@ if (args.length === 0) {
   process.exit(1);
 }
 
-const targetDir = args[0];
+let targetDir = args[0];
 
 if (!existsSync(targetDir)) {
   console.error(`\n❌ Error: La ruta '${targetDir}' no existe.\n`);
   process.exit(1);
 }
 
+if (statSync(targetDir).isFile()) {
+  targetDir = dirname(targetDir);
+}
+
 const files = readdirSync(targetDir);
 
-console.log(`\n🚀 Iniciando benchmark (Estilo Competitivo / ICPC) para: ${targetDir}\n`);
+console.log(`\n🚀 Iniciando análisis de rendimiento para: ${targetDir}\n`);
 
 function detectLanguage() {
   if (files.some((f) => f.endsWith('.cpp'))) return 'C++';

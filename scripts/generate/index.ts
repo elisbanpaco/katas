@@ -1,4 +1,5 @@
 #!/usr/bin/env pnpm tsx
+/* eslint-disable no-console */
 
 import { gatherConfig } from './prompts.js';
 import { generateBoilerplate, generateReadme, LANGUAGES } from './templates.js';

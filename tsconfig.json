@@ -22,13 +22,6 @@
     "isolatedModules": true,
     "types": ["node", "vitest/globals"]
   },
-  "include": [
-    "challenges/**/*",
-    "backend/**/*",
-    "frontend/**/*",
-    "ai-data/**/*",
-    "devops/**/*",
-    "scripts/**/*"
-  ],
+  "include": ["challenges/**/*", "scripts/**/*"],
   "exclude": ["node_modules", "dist"]
 }

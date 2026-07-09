@@ -106,10 +106,12 @@ export async function promptLanguage(): Promise<string> {
     type: 'select',
     name: 'language',
     message: 'Selecciona Lenguaje:',
-    choices: Object.keys(LANGUAGES).map((lang) => ({
-      title: lang.toUpperCase(),
-      value: lang,
-    })),
+    choices: Object.entries(LANGUAGES)
+      .filter(([_, config]) => config.hasTest)
+      .map(([lang]) => ({
+        title: lang.toUpperCase(),
+        value: lang,
+      })),
   });
 
   return response.language?.toLowerCase() || 'typescript';

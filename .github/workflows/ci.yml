@@ -55,7 +55,13 @@ jobs:
       - name: Run C++ tests
         run: |
           for f in $(find challenges -name "test.cpp" -o -name "solution.cpp" -o -name "main.cpp"); do
-            g++ -o test_bin $f && ./test_bin || exit 1
+            echo "Compiling $f"
+            g++ -o test_bin $f || exit 1
+            if ! grep -q -w "cin" "$f"; then
+              ./test_bin || exit 1
+            else
+              echo "Skipping execution of $f because it uses cin (interactive input)"
+            fi
           done
 
       - name: Run Java tests

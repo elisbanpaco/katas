@@ -56,4 +56,4 @@ test_bin
 *.class
 
 # Python tests
-.pytest_cache/
+.pytest_cache/solution

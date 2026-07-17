@@ -116,8 +116,12 @@ function runBenchmark(command: string, buildCommand?: string) {
 const binName = 'temp_bench_bin';
 
 try {
-  if (files.includes('test.cpp') || files.includes('main.cpp')) {
-    const cppFile = files.includes('test.cpp') ? 'test.cpp' : 'main.cpp';
+  if (files.includes('test.cpp') || files.includes('main.cpp') || files.includes('solution.cpp')) {
+    const cppFile = files.includes('test.cpp')
+      ? 'test.cpp'
+      : files.includes('main.cpp')
+        ? 'main.cpp'
+        : 'solution.cpp';
     runBenchmark(`./${binName}`, `g++ -O3 ${join(targetDir, cppFile)} -o ${binName}`);
   } else if (files.includes('main.py')) {
     runBenchmark(`python3 ${join(targetDir, 'main.py')}`);

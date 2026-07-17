@@ -73,19 +73,11 @@ def ${camelName}() -> str:
 #include <iostream>
 #include <string>
 
-std::string ${camelName}() {
-    return "${name}";
-}
-`;
-      files[`test.${langConfig.ext}`] = `#include <cassert>
-#include <iostream>
+using namespace std;
 
-std::string ${camelName}();
-#include "solution.cpp"
 
-int main() {
-    assert(${camelName}() == "${name}");
-    std::cout << "Test passed!" << std::endl;
+int main(){
+
     return 0;
 }
 `;

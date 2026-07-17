@@ -51,9 +51,13 @@ export function toKebabCase(str: string): string {
 }
 
 export function toPascalCase(str: string): string {
-  return str
+  let result = str
     .replace(/[-_\s]+(.)?/g, (_, c) => (c ? c.toUpperCase() : ''))
     .replace(/^[a-z]/, (c) => c.toUpperCase());
+  if (/^[0-9]/.test(result)) {
+    result = 'P' + result;
+  }
+  return result;
 }
 
 export function toCamelCase(str: string): string {

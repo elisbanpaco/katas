@@ -50,5 +50,7 @@ int main(){
 
     int result = sol.threeSumClosest(nums, target);
 
+    cout << "El resultado es: " << result << endl;
+
     return 0;
 }

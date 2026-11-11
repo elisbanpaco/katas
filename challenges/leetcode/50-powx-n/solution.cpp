@@ -14,22 +14,24 @@ class Solution {
 public:
     double myPow(double x, int n) {
         long long N = n;
-        if (N < 0) {
-            x = 1 / x;
-            N = -N;
-        }
-        double result = 1.0;
-        double current_product = x;
-        
+
+        if (N == 0) return 1.0;
+
+        bool negativo = N < 0;
+        if (negativo) N = -N;
+
+        double resultado = 1.0;
+
         while (N > 0) {
             if (N % 2 == 1) {
-                result *= current_product;
+                resultado *= x;
             }
-            current_product *= current_product;
+
+            x *= x;
             N /= 2;
         }
-        
-        return result;
+
+        return negativo ? 1.0 / resultado : resultado;
     }
 };
 
